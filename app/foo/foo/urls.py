@@ -28,6 +28,7 @@ urlpatterns = [
     path("things/<int:id>", views.show_thing),
     path("things/create", views.create_thing),
     path("things/<int:id>/delete", views.delete_thing),
-    path("user/checknum", views.check_user_num)
+    path("user/checknum", views.check_user_num),
+    path("user/all_user",views.get_all_users)
 ]
 

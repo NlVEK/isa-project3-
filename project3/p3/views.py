@@ -12,10 +12,10 @@ def home(request):
     result_num = json.loads(a)
 
     if result_num['result'] == 'ok':
-        return render(request, 'home.html', {'message': result_num['message'], 'display': 1})
+        return render(request, 'home.html', {'message': result_num['message'], 'user': result_num['users'], 'display': 1})
     else:
         #kinda redundant now but save for further progress
-        return render(request, 'home.html', {'message': result_num['message'], 'display': 0})
+        return render(request, 'home.html', {'message': result_num['message'], 'user': result_num['users'], 'display': 0})
 
 
 # Create your views here.

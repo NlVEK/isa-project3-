@@ -5,9 +5,9 @@
     <title>home page</title>
 </head>
 <body>
-This home page is showing how many users are stored in db
+This home page is showing how many users are stored in db, and all users
 {% if display %}
-<div>there is/are {{message}} users stored in db, will add function of creating/updating/deleting later</div>
+<div>there is/are {{message}} users stored in db <br> they are {{user}}</div>
 {% else %}
 <div>{{message}}</div>
 {% endif %}

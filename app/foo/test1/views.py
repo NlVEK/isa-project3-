@@ -15,6 +15,19 @@ def check_user_num(request):
         return HttpResponse(json.dumps({'result': 'ok', 'message': a}))
     else:
         return HttpResponse(json.dumps({'result': 'error', 'message': a}))
+
+
+@csrf_exempt
+def get_all_users(request):
+    a = person.objects.all()
+    people = []
+    if a:
+        for users in a:
+            people.append([users[0].first_name, users[0].last_name])
+        return HttpResponse(json.dumps({'result': 'ok', 'message': people}))
+    else:
+        return HttpResponse(json.dumps({'result': 'error', 'message': people}))
+    
 @csrf_exempt
 def show_person(request, user):
     a = person.objects.filter(id=user)

@@ -10,10 +10,16 @@ def home_number(request): #web front will call
     a = urllib.request.urlopen(a).read().decode('utf-8')
     result_num = json.loads(a)
 
+    b = urllib.request.Request('http://models-api:8000/user/all_user')  # also micro service layer
+    b = urllib.request.urlopen(b).read().decode('utf-8')
+    result_user = json.loads(b)
     # b = requests.get('models-api:8001/user/')#check other stuff
     #....
+    str = ""
+    for i in range(int(result_num['message'])):
+        str+= result_user['message'][2*i] + "&nbsp"+ result_user['message'][2*i+1] + "<br>"
 
-    return HttpResponse(json.dumps({'result':'ok', 'message': result_num['message']})) #res['msg'] is a number
+    return HttpResponse(json.dumps({'result':'ok', 'message': result_num['message'], 'user': str})) #res['msg'] is a number
     # return HttpResponse(result_num)
 
 # @csrf_exempt
