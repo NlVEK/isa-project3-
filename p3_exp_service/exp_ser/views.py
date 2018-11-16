@@ -1,4 +1,6 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, HttpResponseRedirect
+from django.http import JsonResponse, Http404
+from kafka import KafkaProducer, KafkaConsumer
 import urllib.request
 import urllib.parse
 import json
@@ -22,16 +24,65 @@ def home_number(request): #web front will call
     return HttpResponse(json.dumps({'result':'ok', 'message': result_num['message'], 'user': str})) #res['msg'] is a number
     # return HttpResponse(result_num)
 
+@csrf_exempt
+def home_show_create(request): #posting for create
+    a = {}
+    if request.method == "POST":
+        if request.POST:
+            a['user_name'] = request.POST['user_name']
+            a['pwd'] = request.POST['pwd']
+
+        post_encoded = urllib.parse.urlencode(a).encode('utf-8')
+        req = urllib.request.Request('http://models-api:8000/user/create', data=post_encoded, method='POST')
+        resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+        resp = json.loads(resp_json)
+
+        #kafka
+        producer = KafkaProducer(bootstrap_servers='kafka:9092')
+        producer.send('new_user', json.dumps(resp).encode('utf-8'))
+        #relay it back to the front page
+        return JsonResponse(data=resp)
+    else:
+        return HttpResponse("post some data")
+
+@csrf_exempt
+def login(request):
+    a = {}
+    if request.method == "POST":
+        if request.POST:
+            a['user_name'] = request.POST['user_name']
+            a['pwd'] = request.POST['pwd']
+
+        post_encoded = urllib.parse.urlencode(a).encode('utf-8')
+        req = urllib.request.Request('http://models-api:8000/user/login', data=post_encoded, method='POST')
+        resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+        resp = json.loads(resp_json)
+        # relay it back to the front page
+
+        return JsonResponse(data=resp)
+    else:
+        return HttpResponse("error page")
+@csrf_exempt
+def login_with_cookie(request):
+    if request.method == "POST":
+        if request.POST:
+            id = request.POST['id']
+            req = urllib.request.Request('http://models-api:8000/user/' + id)
+            resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+            resp = json.loads(resp_json)
+            return JsonResponse(data=resp)
+
+
 # @csrf_exempt
-# def home_show_create(request): #posting for create
-#     a = {}
+# def create_user_kafka(request):
+#     producer = KafkaProducer(bootstrap_servers='kafka:9092')
 #     if request.method == "POST":
 #         if request.POST:
-#             a['first_name'] = request.POST['firstname']
-#             a['last_name'] = request.POST['lastname']
-#
-#         post_encoded = urllib.parse.urlencode(a).encode('utf-8')
-#         req = urllib.request.Request('http://models-api:8000/user/create', data=post_encoded, method='POST')
-#         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
-#         resp = json.loads(resp_json)
+#             user =  request.POST['user_name']
+#             pwd = request.POST['pwd']
+#             new_user = {'user_name': user, 'pwd': pwd}
+#             producer.send('new_user', json.dumps(new_user).encode('utf-8'))
+
 # Create your views here.
+
+

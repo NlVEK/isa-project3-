@@ -19,5 +19,7 @@ from p3 import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('home', views.home),
-    # path('/create', create)
+    path('login', views.login, name='log_in'),
+    path('logout', views.logout, name='log_out'),
+    path('create', views.create, name='create')
 ]

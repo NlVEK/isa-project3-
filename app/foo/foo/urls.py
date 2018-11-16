@@ -21,14 +21,15 @@ from test1 import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("user/<int:user>", views.show_person),
-    path("user/create", views.create_person_result),
-    path("user/<int:user>/delete", views.person_delete),
-    path("user/<int:user>/update", views.person_update),
-    path('things/<int:id>/update', views.update_thing),
-    path("things/<int:id>", views.show_thing),
-    path("things/create", views.create_thing),
-    path("things/<int:id>/delete", views.delete_thing),
-    path("user/checknum", views.check_user_num),
-    path("user/all_user",views.get_all_users)
+    path("user/create", views.create_person),
+    path('user/login', views.person_login),
+    # path("user/<int:user>/delete", views.person_delete),
+    # path("user/<int:user>/update", views.person_update),
+    # path('things/<int:id>/update', views.update_thing),
+    # path("things/<int:id>", views.show_thing),
+    # path("things/create", views.create_thing),
+    # path("things/<int:id>/delete", views.delete_thing),
+    # path("user/checknum", views.check_user_num),
+    # path("user/all_user",views.get_all_users)
 ]
 

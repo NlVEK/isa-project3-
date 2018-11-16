@@ -23,5 +23,7 @@ from exp_ser import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('checknum', views.home_number),
-    # path('create')
+    path('create', views.home_show_create),
+    path('login', views.login),
+    path('cookie', views.login_with_cookie)
 ]

@@ -5,12 +5,12 @@
     <title>home page</title>
 </head>
 <body>
-This home page is showing how many users are stored in db, and all users
-{% if display %}
-<div>there is/are {{message}} users stored in db <br> they are {{user}}</div>
-{% else %}
-<div>{{message}}</div>
-{% endif %}
+<!--This home page is showing how many users are stored in db, and all users-->
+<!--{% if display %}-->
+<!--<div>there is/are {{message}} users stored in db <br> they are {{user}}</div>-->
+<!--{% else %}-->
+<!--<div>{{message}}</div>-->
+<!--{% endif %}-->
 
 <!--<h>further actions for users</h>-->
 <!--<ol>-->
@@ -26,5 +26,16 @@ This home page is showing how many users are stored in db, and all users
 <!--</li>-->
 
 <!--</ol>-->
+<div> home page</div>
+
+
+<a href="{% url 'create' %}"> click here to create user</a>
+<a href="{% url 'log_in' %}"> click here to log in</a>
+<a href="{% url 'log_out' %}"> click here to log out</a>
+{% if id %}
+<div>welcome back, {{user_name}}!, <br> your id is {{id}}</div>
+{% else %}
+<div> your are not logged in</div>
+{% endif %}
 </body>
 </html>
