@@ -1,7 +1,7 @@
-# isa-project3
+# isa-project4 and 5
 
-app = model, micro service from project 2
+app = model
 
-project 3 = web front end stuff
+project 3 = web front end
 
-sorry for the bad naming 
+batch.py in exp layer
